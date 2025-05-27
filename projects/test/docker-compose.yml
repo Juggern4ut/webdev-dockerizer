@@ -1,0 +1,14 @@
+services:
+  test:
+    build:
+      context: .
+      dockerfile: ../../dockerfiles/php-apache.Dockerfile
+    container_name: test
+    networks:
+      - backend
+    volumes:
+      - ./:/var/www/html
+
+networks:
+  backend:
+    external: true

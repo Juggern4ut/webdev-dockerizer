@@ -1,0 +1,45 @@
+services:
+  db:
+    image: mysql:9.3.0
+    container_name: mysql_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 5hfPYt
+      MYSQL_USER: dimaster
+      MYSQL_PASSWORD: 5hfPYt
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    networks:
+      - backend
+    depends_on:
+      - phpmyadmin
+
+volumes:
+  mysql_data:
+
+networks:
+  backend:
+    driver: bridge
+    external: true
