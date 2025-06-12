@@ -24,4 +24,4 @@ ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=3000
 
 # Start Nuxt in development mode
-CMD ["npm", "run", "dev"]
+CMD sh -c "rm -f /tmp/nitro/worker* && npm run dev"
