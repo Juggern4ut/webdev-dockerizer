@@ -3,6 +3,7 @@ services:
     image: mysql:9.3.0
     container_name: mysql_db
     restart: unless-stopped
+    command: mysqld --sql_mode="" --character-set-server=utf8 --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
     environment:
       MYSQL_ROOT_PASSWORD: 5hfPYt
       MYSQL_USER: dimaster
