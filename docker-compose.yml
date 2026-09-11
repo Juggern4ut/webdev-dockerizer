@@ -2,12 +2,12 @@ services:
   db:
     image: mysql:9.3.0
     container_name: mysql_db
-    restart: unless-stopped
     command: mysqld --sql_mode="" --character-set-server=utf8 --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 5hfPYt
-      MYSQL_USER: dimaster
-      MYSQL_PASSWORD: 5hfPYt
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -21,11 +21,11 @@ services:
     restart: unless-stopped
     environment:
       PMA_HOST: db
-      PHP_UPLOAD_MAX_FILESIZE: 64M
-      PHP_POST_MAX_SIZE: 64M
-      UPLOAD_LIMIT: 64M
-    ports:
-      - "8080:80"
+      PHP_UPLOAD_MAX_FILESIZE: 0
+      PHP_POST_MAX_SIZE: 0
+      UPLOAD_LIMIT: 0
+    volumes:
+      - ./php-custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
     networks:
       - backend
 
@@ -39,10 +39,9 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./nginx/ssl_cert:/etc/nginx/ssl
+      - ./nginx/logs:/var/log/nginx
     networks:
       - backend
-    depends_on:
-      - phpmyadmin
 
 volumes:
   mysql_data:

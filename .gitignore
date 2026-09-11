@@ -1,2 +1,12 @@
 /nginx/ssl_cert/*
+!/nginx/ssl_cert/pma.local-key.pem
+!/nginx/ssl_cert/pma.local.pem
+
+/nginx/conf.d/*
+!/nginx/conf.d/pma.conf
+!/nginx/conf.d/mysql.conf
+
+/nginx/logs/*
+
 /projects/*
+.env

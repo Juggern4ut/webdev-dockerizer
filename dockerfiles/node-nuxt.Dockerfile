@@ -4,14 +4,13 @@ FROM node:24
 WORKDIR /app
 
 # Copy package files and install dependencies
-COPY app/package*.json ./
+COPY package*.json ./
 
 RUN npm cache clean --force && \
     npm install --prefer-offline --no-audit
 
-
 # Copy rest of the app
-COPY app .
+COPY . .
 
 # Führe nuxt prepare aus
 RUN npm run postinstall
