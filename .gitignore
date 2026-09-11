@@ -9,4 +9,5 @@
 /nginx/logs/*
 
 /projects/*
+!/projects/.gitkeep
 .env
